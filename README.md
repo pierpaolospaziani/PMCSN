@@ -1,6 +1,6 @@
 # PMCSNProject
 
-Crecco Valerio - Ludovico De Santis - Pierpaolo Spaziani
+Valerio Crecco - Ludovico De Santis - Pierpaolo Spaziani
 
 Prendendo spunto dalla nostra esperienza personale in ambito lavorativo, è stato deciso di modellare la gestione del flusso di arrivo presso un settore dello stadio.
 
@@ -16,11 +16,8 @@ Un ulteriore argomento preso in considerazione è stato quello della sicurezza. 
 
 Gli obiettivi preposti sono:
 
-	• Minimizzare i tempi di accesso al settore dello stadio, con un tetto
-massimo di accesso pari a sei minuti e mezzo;
+	• Minimizzare i tempi di accesso al settore dello stadio, con un tetto massimo di accesso pari a sei minuti e mezzo;
 
-	• Minimizzare i costi relativi al personale addetto da impiegare per
-l’erogazione del servizio;
+	• Minimizzare i costi relativi al personale addetto da impiegare per l’erogazione del servizio;
 
-	• Garantire una copertura dei controlli delle forze dell’ordine di almeno il
-25% del flusso di utenti provenienti dal centro Doc & Pat.
+	• Garantire una copertura dei controlli delle forze dell’ordine di almeno il 25% del flusso di utenti provenienti dal centro Doc & Pat.
