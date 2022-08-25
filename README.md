@@ -6,9 +6,7 @@ Prendendo spunto dalla nostra esperienza personale in ambito lavorativo, è stat
 
 L’organizzazione è spesso mal amministrata e non riesce a gestire il carico di utenti che si reca presso lo stadio, con il risultato di malcontenti poiché gli accessi avvengono ad evento già iniziato, nonostante gli utenti si siano recati allo stadio molto prima e abbiano trascorso il restante del tempo in coda.
 
-Nel sistema sono state considerate due tipologie di utenti:
-	• utentidisabili;
-	• utenti non disabili.
+Nel sistema sono state considerate due tipologie di utenti: disabili e non disabili.
 
 È stata effettuata questa distinzione poiché, nel caso reale, i disabili hanno percorsi dedicati che permettono di non attendere molto tempo in coda. Tuttavia, entrambe le tipologie hanno dei centri in comune, come l’accesso allo stadio tramite il parcheggio auto.
 
