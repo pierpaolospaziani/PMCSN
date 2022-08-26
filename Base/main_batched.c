@@ -82,6 +82,12 @@ long double w_est[7][6]     = {{0,0,0,0,0,0},
                                {0,0,0,0,0,0},
                                {0,0,0,0,0,0}};
 
+long double mean_est_resp     = 0.0;
+long double stdev_est_resp    = 0.0;
+long double w_est_resp        = 0.0;
+long double batch_means_resp  = 0.0;
+long double interval_est_resp = 0.0;
+
 FILE *batch_file;
 FILE *delay_file;
 FILE *bypass;
@@ -100,6 +106,17 @@ void interval_est_func(long n, int r, int s){
     u = 1.0 - 0.5 * (1.0 - 0.95);
     t = idfStudent(n - 1, u);
     w_est[r][s] = t * stdev_est[r][s] / sqrt(n - 1);
+  }else{
+    printf("ERROR - insufficient data\n");
+  }
+}
+
+void interval_est_func_resp(long n){
+  long double u,t;
+  if (n > 1) {
+    u = 1.0 - 0.5 * (1.0 - 0.95);
+    t = idfStudent(n - 1, u);
+    w_est_resp = t * stdev_est_resp / sqrt(n - 1);
   }else{
     printf("ERROR - insufficient data\n");
   }
@@ -1083,7 +1100,79 @@ label:
       fflush(stdout);
     }
   }
-  printf("\n\n");
+
+  char buff[1024];
+  long double val_resp;
+  char *str;
+  FILE *file;
+  int giro = 0;
+
+back_to:
+  mean_est_resp     = 0.0;
+  stdev_est_resp    = 0.0;
+  w_est_resp        = 0.0;
+  batch_means_resp  = 0.0;
+  interval_est_resp = 0.0;
+  if (giro == 0){
+    if((file = fopen("CSV/resp_time.csv", "r")) == NULL){
+      printf("\n fopen error");
+      exit(-1);
+    }
+  } else {
+    if((file = fopen("CSV/bypass.csv", "r")) == NULL){
+      printf("\n fopen error");
+      exit(-1);
+    }
+  }
+
+  if(fseek(file, 0L, SEEK_SET) != 0){
+    printf("\n fseek error");
+    exit(1);
+  }
+
+  long double *rip_buff_rest = (long double *)malloc(BATCH_K*sizeof(long double));
+  if(rip_buff_rest == NULL){
+    printf("\n malloc error");
+    exit(1);
+  }
+
+  int u = 0;
+  while (fgets(buff, 1024, file)){
+    char *token = strtok(buff, ",");
+    while (token) { 
+      val_resp = strtold(token, &str);
+      rip_buff_rest[u] = val_resp;
+      u++;
+      token = strtok(NULL, ",");
+    }
+  }
+
+  if(fclose(file) != 0){
+      printf("fclose error");
+      exit(1);
+  }
+
+  n = 0;
+  for(int f = 0; f < BATCH_K; f++){
+    batch_means_resp += rip_buff_rest[f];
+    n++;
+    diff = rip_buff_rest[f] - mean_est_resp;
+    interval_est_resp += diff*diff*(n - 1.0)/n;
+    mean_est_resp += diff / n;
+  }
+  stdev_est_resp = sqrt(interval_est_resp / n);  
+  interval_est_func_resp(n);
+
+  batch_means_resp = batch_means_resp/BATCH_K;
+
+  if (giro == 0){
+    printf("\n\n The Response Time is: [%Lf]+/-[%Lf]", mean_est_resp, w_est_resp);
+    fflush(stdout);
+    giro = 1;
+    goto back_to;
+  }
+  printf("\n\n The Police Control Percentage is: [%Lf]+/-[%Lf]\n\n\n", mean_est_resp, w_est_resp);
   fflush(stdout);
+
   return 0;
 }

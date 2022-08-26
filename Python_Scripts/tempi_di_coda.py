@@ -61,7 +61,18 @@ def tempi_coda(centro,m,p,e_s):
 	p_q = p_q/p_0
 	e_t_q = (p_q*e_s)/(1-p)
 	print(" CENTRO",centro,": E(T_Q)  =",e_t_q)
-	# return(e_t_q)
+
+def r_tempi_coda(centro,m,p,e_s):
+	e_s = e_s/m
+	p_0 = math.pow((m*p),m)/(math.factorial(m)*(1-p))
+	p_q = p_0
+	for i in range (0,m):
+		pot = math.pow((m*p),i)
+		fac = math.factorial(i)
+		p_0 = p_0 + (pot/fac)
+	p_q = p_q/p_0
+	e_t_q = (p_q*e_s)/(1-p)
+	return(e_t_q)
 
 def multi_tempi_coda(centro,m,p,e_s):
 	e_s = e_s/m
@@ -72,11 +83,23 @@ def multi_tempi_coda(centro,m,p,e_s):
 		fac = math.factorial(i)
 		p_0 = p_0 + (pot/fac)
 	p_q = p_q/p_0
-	# e_t_q = (p_q*e_s)/((1-p)*(1-((LAMBDA1*P_A2) + (p1_0*(1-P_SB1)*(NUM_SERVER_C1_1/AVG_SERVICE_C1)))*P_C3*AVG_SERVICE_C2/m))
 	e_t_q1 = (p_q*e_s)/(1-(p*P_C3))
 	e_t_q2 = (p_q*e_s)/((1-p)*(1-(p*P_C3)))
 	print(" CENTRO",centro,": E(T_Q)1 =",e_t_q1)
 	print("            E(T_Q)2 =",e_t_q2)
+
+def r_multi_tempi_coda(centro,m,p,e_s):
+	e_s = e_s/m
+	p_0 = math.pow((m*p),m)/(math.factorial(m)*(1-p))
+	p_q = p_0
+	for i in range (0,m):
+		pot = math.pow((m*p),i)
+		fac = math.factorial(i)
+		p_0 = p_0 + (pot/fac)
+	p_q = p_q/p_0
+	e_t_q1 = (p_q*e_s)/(1-(p*P_C3))
+	e_t_q2 = (p_q*e_s)/((1-p)*(1-(p*P_C3)))
+	return e_t_q1,e_t_q2
 
 p0_0 = LAMBDA1*P_C0*AVG_SERVICE_C0
 p1_0 = LAMBDA1*P_C1*AVG_SERVICE_C1/NUM_SERVER_C1_1
@@ -112,6 +135,13 @@ tempi_coda(3, NUM_SERVER_C3_1, p3_0, AVG_SERVICE_C3)
 print(" CENTRO 4 : E(T_Q)  = NO CODA")
 tempi_coda(5, NUM_SERVER_C5_1, p5_0, AVG_SERVICE_C5)
 tempi_coda(6, NUM_SERVER_C6_1, p6_0, AVG_SERVICE_C6)
+a = r_tempi_coda(0, NUM_SERVER_C0_1, p0_0, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_1, p1_0, AVG_SERVICE_C1)
+c = r_tempi_coda(2, NUM_SERVER_C2_1, p2_0, AVG_SERVICE_C2)
+d = r_tempi_coda(3, NUM_SERVER_C3_1, p3_0, AVG_SERVICE_C3)
+f = r_tempi_coda(5, NUM_SERVER_C5_1, p5_0, AVG_SERVICE_C5)
+g = r_tempi_coda(6, NUM_SERVER_C6_1, p6_0, AVG_SERVICE_C6)
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+c+d+f+g)
 
 print("\n CONFIGURAZIONE 2:")
 tempi_coda(0, NUM_SERVER_C0_2, p0_1, AVG_SERVICE_C0)
@@ -121,8 +151,13 @@ tempi_coda(3, NUM_SERVER_C3_2, p3_1, AVG_SERVICE_C3)
 print(" CENTRO 4 : E(T_Q)  = NO CODA")
 tempi_coda(5, NUM_SERVER_C5_2, p5_1, AVG_SERVICE_C5)
 tempi_coda(6, NUM_SERVER_C6_2, p6_1, AVG_SERVICE_C6)
-
-print("\n   TOTALE : T(T_S)  =",avgs + 97.02907780276956+77.57196888722112+8.33915612933387+6.541519565779723+5.281498067124421+10.923248074114339)
+a = r_tempi_coda(0, NUM_SERVER_C0_2, p0_1, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_2, p1_1, AVG_SERVICE_C1)
+c = r_tempi_coda(2, NUM_SERVER_C2_2, p2_1, AVG_SERVICE_C2)
+d = r_tempi_coda(3, NUM_SERVER_C3_2, p3_1, AVG_SERVICE_C3)
+f = r_tempi_coda(5, NUM_SERVER_C5_2, p5_1, AVG_SERVICE_C5)
+g = r_tempi_coda(6, NUM_SERVER_C6_2, p6_1, AVG_SERVICE_C6)
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+c+d+f+g)
 
 
 print("\n CONFIGURAZIONE 3:")
@@ -133,8 +168,13 @@ tempi_coda(3, NUM_SERVER_C3_3, p3_2, AVG_SERVICE_C3)
 print(" CENTRO 4 : E(T_Q)  = NO CODA")
 tempi_coda(5, NUM_SERVER_C5_3, p5_2, AVG_SERVICE_C5)
 tempi_coda(6, NUM_SERVER_C6_3, p6_2, AVG_SERVICE_C6)
-
-print("\n   TOTALE : T(T_S)  =",avgs + 1.86973352653474+12.729128516768107+0.7470384735832996+1.418217082699819+0.9523300285859633+1.7431298051794515)
+a = r_tempi_coda(0, NUM_SERVER_C0_3, p0_2, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_3, p1_2, AVG_SERVICE_C1)
+c = r_tempi_coda(2, NUM_SERVER_C2_3, p2_2, AVG_SERVICE_C2)
+d = r_tempi_coda(3, NUM_SERVER_C3_3, p3_2, AVG_SERVICE_C3)
+f = r_tempi_coda(5, NUM_SERVER_C5_3, p5_2, AVG_SERVICE_C5)
+g = r_tempi_coda(6, NUM_SERVER_C6_3, p6_2, AVG_SERVICE_C6)
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+c+d+f+g)
 
 print("\n --------------------------------------")
 
@@ -168,6 +208,17 @@ tempi_coda(1, NUM_SERVER_C1_1, p1_0, AVG_SERVICE_C1)
 multi_tempi_coda(2, NUM_SERVER_C2_1, p2_0, AVG_SERVICE_C2)
 print(" CENTRO 3 : E(T_Q)  = NO CODA")
 multi_tempi_coda(4, NUM_SERVER_C4_1, p4_0, AVG_SERVICE_C5)
+a = r_tempi_coda(0, NUM_SERVER_C0_1, p0_0, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_1, p1_0, AVG_SERVICE_C1)
+c = r_multi_tempi_coda(2, NUM_SERVER_C2_1, p2_0, AVG_SERVICE_C2)
+f = r_multi_tempi_coda(4, NUM_SERVER_C4_1, p4_0, AVG_SERVICE_C5)
+
+lambda_disabili_usciti_da_parcheggio = LAMBDA1*P_C0*(1-P_SB0)*P_PD0
+lambda_disabili_usciti_da_doc_pat = ((p2_0*(NUM_SERVER_C2_1/AVG_SERVICE_C2))*(1-P_SB2)*(1-P_C2))
+P_disabili = (lambda_disabili_usciti_da_parcheggio + lambda_disabili_usciti_da_doc_pat)/(p4_0/(AVG_SERVICE_C5/NUM_SERVER_C4_1))
+avgs = AVG_SERVICE_C0+AVG_SERVICE_C1+AVG_SERVICE_C2+AVG_SERVICE_C4+AVG_SERVICE_C5
+
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+(c[0]*P_C3)+(c[1]*P_C2)+(f[0]*P_disabili)+(f[1]*(1-P_disabili)))
 
 print("\n --------------------------------------")
 
@@ -184,6 +235,17 @@ tempi_coda(1, NUM_SERVER_C1_2, p1_1, AVG_SERVICE_C1)
 multi_tempi_coda(2, NUM_SERVER_C2_2, p2_1, AVG_SERVICE_C2)
 print(" CENTRO 3 : E(T_Q)  = NO CODA")
 multi_tempi_coda(4, NUM_SERVER_C4_2, p4_1, AVG_SERVICE_C5)
+a = r_tempi_coda(0, NUM_SERVER_C0_2, p0_1, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_2, p1_1, AVG_SERVICE_C1)
+c = r_multi_tempi_coda(2, NUM_SERVER_C2_2, p2_1, AVG_SERVICE_C2)
+f = r_multi_tempi_coda(4, NUM_SERVER_C4_2, p4_1, AVG_SERVICE_C5)
+
+lambda_disabili_usciti_da_parcheggio = LAMBDA1*P_C0*(1-P_SB0)*P_PD0
+lambda_disabili_usciti_da_doc_pat = ((p2_0*(NUM_SERVER_C2_1/AVG_SERVICE_C2))*(1-P_SB2)*(1-P_C2))
+P_disabili = (lambda_disabili_usciti_da_parcheggio + lambda_disabili_usciti_da_doc_pat)/(p4_0/(AVG_SERVICE_C5/NUM_SERVER_C4_1))
+avgs = AVG_SERVICE_C0+AVG_SERVICE_C1+AVG_SERVICE_C2+AVG_SERVICE_C4+AVG_SERVICE_C5
+
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+(c[0]*P_C3)+(c[1]*P_C2)+(f[0]*P_disabili)+(f[1]*(1-P_disabili)))
 
 print("\n --------------------------------------")
 
@@ -200,10 +262,115 @@ tempi_coda(1, NUM_SERVER_C1_3, p1_2, AVG_SERVICE_C1)
 multi_tempi_coda(2, NUM_SERVER_C2_3, p2_2, AVG_SERVICE_C2)
 print(" CENTRO 3 : E(T_Q)  = NO CODA")
 multi_tempi_coda(4, NUM_SERVER_C4_3, p4_2, AVG_SERVICE_C5)
+a = r_tempi_coda(0, NUM_SERVER_C0_3, p0_2, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_3, p1_2, AVG_SERVICE_C1)
+c = r_multi_tempi_coda(2, NUM_SERVER_C2_3, p2_2, AVG_SERVICE_C2)
+f = r_multi_tempi_coda(4, NUM_SERVER_C4_3, p4_2, AVG_SERVICE_C5)
 
+lambda_disabili_usciti_da_parcheggio = LAMBDA1*P_C0*(1-P_SB0)*P_PD0
+lambda_disabili_usciti_da_doc_pat = ((p2_0*(NUM_SERVER_C2_1/AVG_SERVICE_C2))*(1-P_SB2)*(1-P_C2))
+P_disabili = (lambda_disabili_usciti_da_parcheggio + lambda_disabili_usciti_da_doc_pat)/(p4_0/(AVG_SERVICE_C5/NUM_SERVER_C4_1))
 avgs = AVG_SERVICE_C0+AVG_SERVICE_C1+AVG_SERVICE_C2+AVG_SERVICE_C4+AVG_SERVICE_C5
 
-print("\n   TOTALE : T(T_S)  =",avgs + 1.86973352653474+12.729128516768107+0.7470384735832996+1.418217082699819+0.9523300285859633+1.7431298051794515)
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+(c[0]*P_C3)+(c[1]*P_C2)+(f[0]*P_disabili)+(f[1]*(1-P_disabili)))
+
+print("\n --------------------------------------")
+
+NUM_SERVER_C0_1 = 1
+NUM_SERVER_C1_1 = 5
+NUM_SERVER_C2_1 = 12
+NUM_SERVER_C3_1 = 6
+NUM_SERVER_C4_1 = 9
+
+NUM_SERVER_C0_2 = 1
+NUM_SERVER_C1_2 = 11
+NUM_SERVER_C2_2 = 26
+NUM_SERVER_C3_2 = 13
+NUM_SERVER_C4_2 = 18
+
+NUM_SERVER_C0_3 = 1
+NUM_SERVER_C1_3 = 2
+NUM_SERVER_C2_3 = 3
+NUM_SERVER_C3_3 = 2
+NUM_SERVER_C4_3 = 2
+
+p0_0 = LAMBDA1*P_C0*AVG_SERVICE_C0
+p1_0 = LAMBDA1*P_C1*AVG_SERVICE_C1/NUM_SERVER_C1_1
+p2_0 = ((LAMBDA1*P_A2) + (p1_0*(1-P_SB1)*(NUM_SERVER_C1_1/AVG_SERVICE_C1)))*AVG_SERVICE_C2/NUM_SERVER_C2_1
+lambda3_0 = ((p2_0*(NUM_SERVER_C2_1/AVG_SERVICE_C2))*(1-P_SB2)*P_C2) + (p0_0*(1/AVG_SERVICE_C0)*(1-P_SB0))*(1-P_PD0)
+p4_0 = ((lambda3_0*P_PC*(1-P_CP4)) + (lambda3_0*(1-P_PC)) + (p0_0*(1/AVG_SERVICE_C0)*(1-P_SB0))*P_PD0 + (p2_0*(NUM_SERVER_C2_1/AVG_SERVICE_C2))*(1-P_SB2)*P_C3)*(AVG_SERVICE_C5/NUM_SERVER_C4_1)
+
+print(" CONFIGURAZIONE 1 MULTI-QUEUE:")
+tempi_coda(0, NUM_SERVER_C0_1, p0_0, AVG_SERVICE_C0)
+tempi_coda(1, NUM_SERVER_C1_1, p1_0, AVG_SERVICE_C1)
+multi_tempi_coda(2, NUM_SERVER_C2_1, p2_0, AVG_SERVICE_C2)
+print(" CENTRO 3 : E(T_Q)  = NO CODA")
+multi_tempi_coda(4, NUM_SERVER_C4_1, p4_0, AVG_SERVICE_C5)
+a = r_tempi_coda(0, NUM_SERVER_C0_1, p0_0, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_1, p1_0, AVG_SERVICE_C1)
+c = r_multi_tempi_coda(2, NUM_SERVER_C2_1, p2_0, AVG_SERVICE_C2)
+f = r_multi_tempi_coda(4, NUM_SERVER_C4_1, p4_0, AVG_SERVICE_C5)
+
+lambda_disabili_usciti_da_parcheggio = LAMBDA1*P_C0*(1-P_SB0)*P_PD0
+lambda_disabili_usciti_da_doc_pat = ((p2_0*(NUM_SERVER_C2_1/AVG_SERVICE_C2))*(1-P_SB2)*(1-P_C2))
+P_disabili = (lambda_disabili_usciti_da_parcheggio + lambda_disabili_usciti_da_doc_pat)/(p4_0/(AVG_SERVICE_C5/NUM_SERVER_C4_1))
+avgs = AVG_SERVICE_C0+AVG_SERVICE_C1+AVG_SERVICE_C2+AVG_SERVICE_C4+AVG_SERVICE_C5
+
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+(c[0]*P_C3)+(c[1]*P_C2)+(f[0]*P_disabili)+(f[1]*(1-P_disabili)))
+
+print("\n --------------------------------------")
+
+
+p0_1 = LAMBDA2*P_C0*AVG_SERVICE_C0
+p1_1 = LAMBDA2*P_C1*AVG_SERVICE_C1/NUM_SERVER_C1_2
+p2_1 = ((LAMBDA2*P_A2) + (p1_1*(1-P_SB1)*(NUM_SERVER_C1_2/AVG_SERVICE_C1)))*AVG_SERVICE_C2/NUM_SERVER_C2_2
+lambda3_1 = ((p2_1*(NUM_SERVER_C2_2/AVG_SERVICE_C2))*(1-P_SB2)*P_C2) + (p0_1*(1/AVG_SERVICE_C0)*(1-P_SB0))*(1-P_PD0)
+p4_1 = ((lambda3_1*P_PC*(1-P_CP4)) + (lambda3_1*(1-P_PC)) + (p0_1*(1/AVG_SERVICE_C0)*(1-P_SB0))*P_PD0 + (p2_1*(NUM_SERVER_C2_2/AVG_SERVICE_C2))*(1-P_SB2)*P_C3)*(AVG_SERVICE_C5/NUM_SERVER_C4_2)
+
+print(" CONFIGURAZIONE 2 MULTI-QUEUE:")
+tempi_coda(0, NUM_SERVER_C0_2, p0_1, AVG_SERVICE_C0)
+tempi_coda(1, NUM_SERVER_C1_2, p1_1, AVG_SERVICE_C1)
+multi_tempi_coda(2, NUM_SERVER_C2_2, p2_1, AVG_SERVICE_C2)
+print(" CENTRO 3 : E(T_Q)  = NO CODA")
+multi_tempi_coda(4, NUM_SERVER_C4_2, p4_1, AVG_SERVICE_C5)
+a = r_tempi_coda(0, NUM_SERVER_C0_2, p0_1, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_2, p1_1, AVG_SERVICE_C1)
+c = r_multi_tempi_coda(2, NUM_SERVER_C2_2, p2_1, AVG_SERVICE_C2)
+f = r_multi_tempi_coda(4, NUM_SERVER_C4_2, p4_1, AVG_SERVICE_C5)
+
+lambda_disabili_usciti_da_parcheggio = LAMBDA1*P_C0*(1-P_SB0)*P_PD0
+lambda_disabili_usciti_da_doc_pat = ((p2_0*(NUM_SERVER_C2_1/AVG_SERVICE_C2))*(1-P_SB2)*(1-P_C2))
+P_disabili = (lambda_disabili_usciti_da_parcheggio + lambda_disabili_usciti_da_doc_pat)/(p4_0/(AVG_SERVICE_C5/NUM_SERVER_C4_1))
+avgs = AVG_SERVICE_C0+AVG_SERVICE_C1+AVG_SERVICE_C2+AVG_SERVICE_C4+AVG_SERVICE_C5
+
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+(c[0]*P_C3)+(c[1]*P_C2)+(f[0]*P_disabili)+(f[1]*(1-P_disabili)))
+
+print("\n --------------------------------------")
+
+
+p0_2 = LAMBDA3*P_C0*AVG_SERVICE_C0
+p1_2 = LAMBDA3*P_C1*AVG_SERVICE_C1/NUM_SERVER_C1_3
+p2_2 = ((LAMBDA3*P_A2) + (p1_2*(1-P_SB1)*(NUM_SERVER_C1_3/AVG_SERVICE_C1)))*AVG_SERVICE_C2/NUM_SERVER_C2_3
+lambda3_2 = ((p2_2*(NUM_SERVER_C2_3/AVG_SERVICE_C2))*(1-P_SB2)*P_C2) + (p0_2*(1/AVG_SERVICE_C0)*(1-P_SB0))*(1-P_PD0)
+p4_2 = ((lambda3_2*P_PC*(1-P_CP4)) + (lambda3_2*(1-P_PC)) + (p0_2*(1/AVG_SERVICE_C0)*(1-P_SB0))*P_PD0 + (p2_2*(NUM_SERVER_C2_3/AVG_SERVICE_C2))*(1-P_SB2)*P_C3)*(AVG_SERVICE_C5/NUM_SERVER_C4_3)
+
+print(" CONFIGURAZIONE 3 MULTI-QUEUE:")
+tempi_coda(0, NUM_SERVER_C0_3, p0_2, AVG_SERVICE_C0)
+tempi_coda(1, NUM_SERVER_C1_3, p1_2, AVG_SERVICE_C1)
+multi_tempi_coda(2, NUM_SERVER_C2_3, p2_2, AVG_SERVICE_C2)
+print(" CENTRO 3 : E(T_Q)  = NO CODA")
+multi_tempi_coda(4, NUM_SERVER_C4_3, p4_2, AVG_SERVICE_C5)
+a = r_tempi_coda(0, NUM_SERVER_C0_3, p0_2, AVG_SERVICE_C0)
+b = r_tempi_coda(1, NUM_SERVER_C1_3, p1_2, AVG_SERVICE_C1)
+c = r_multi_tempi_coda(2, NUM_SERVER_C2_3, p2_2, AVG_SERVICE_C2)
+f = r_multi_tempi_coda(4, NUM_SERVER_C4_3, p4_2, AVG_SERVICE_C5)
+
+lambda_disabili_usciti_da_parcheggio = LAMBDA1*P_C0*(1-P_SB0)*P_PD0
+lambda_disabili_usciti_da_doc_pat = ((p2_0*(NUM_SERVER_C2_1/AVG_SERVICE_C2))*(1-P_SB2)*(1-P_C2))
+P_disabili = (lambda_disabili_usciti_da_parcheggio + lambda_disabili_usciti_da_doc_pat)/(p4_0/(AVG_SERVICE_C5/NUM_SERVER_C4_1))
+avgs = AVG_SERVICE_C0+AVG_SERVICE_C1+AVG_SERVICE_C2+AVG_SERVICE_C4+AVG_SERVICE_C5
+
+print("\n   TOTALE : T(T_S)  =",avgs + a+b+(c[0]*P_C3)+(c[1]*P_C2)+(f[0]*P_disabili)+(f[1]*(1-P_disabili)))
 
 print("\n --------------------------------------")
 
