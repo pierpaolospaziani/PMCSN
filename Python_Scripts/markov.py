@@ -82,18 +82,17 @@ def markov(lambda4, m):
 		inv_fac = 1/math.factorial(j)
 		den = den + (pot*inv_fac)
 	p_loss = (math.pow((lambda4*AVG_SERVICE_C4), m)/(math.factorial(m)))/(den)
-	print(" p_loss =", p_loss)
+	print(" • p_loss =", p_loss)
 
+print("\n I valori riportati fanno riferimento al centro 4 (Police Control):")
 
-print("\n CONFIGURAZIONE 1 - lambda4 =", lambda4_0)
+print("\n CONFIGURAZIONE 1\n • lambda =", lambda4_0)
 markov(lambda4_0, NUM_SERVER_C4_1)
 
-print("\n")
-
-print("\n CONFIGURAZIONE 2 - lambda4 =", lambda4_1)
+print("\n CONFIGURAZIONE 2\n • lambda =", lambda4_1)
 markov(lambda4_1,NUM_SERVER_C4_2)
 
-print("\n")
-
-print("\n CONFIGURAZIONE 3 - lambda4 =", lambda4_2)
+print("\n CONFIGURAZIONE 3\n • lambda =", lambda4_2)
 markov(lambda4_2,NUM_SERVER_C4_3)
+
+print("")

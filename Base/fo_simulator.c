@@ -100,7 +100,7 @@ int main(int argc, char const *argv[]){
   	exit(1);
   }
 
-  long double *rip_buff = (long double *)malloc((STOP/F_O_TIME)*sizeof(long double));
+  long double *rip_buff = (long double *)malloc((STOP/F_O_TIME*F_O_REPS)*sizeof(long double));
 	if(rip_buff == NULL){
 		printf("\n malloc error");
 		exit(1);
@@ -108,7 +108,7 @@ int main(int argc, char const *argv[]){
 
   while (fgets(buff, 1024, file)){
     char *token = strtok(buff, ",");
-    while (token) { 
+    while (token) {
       val = strtold(token, &str);
       rip_buff[u] = val;
     	u++;

@@ -94,7 +94,7 @@ int main(int argc, char const *argv[]){
   	exit(1);
   }
 
-  long double *rip_buff = (long double *)malloc((STOP/F_O_TIME)*sizeof(long double));
+  long double *rip_buff = (long double *)malloc((STOP/F_O_TIME*F_O_REPS)*sizeof(long double));
 	if(rip_buff == NULL){
 		printf("\n malloc error");
 		exit(1);
