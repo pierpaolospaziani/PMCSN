@@ -37,7 +37,7 @@ reinsert4:
 }
 
 void f(char *s){
-        printf("**********%*s%*s**********\n",(int)(10+strlen(s)/2),s,(int)(10-strlen(s)/2),"");
+   printf("**********%*s%*s**********\n",(int)(10+strlen(s)/2),s,(int)(10-strlen(s)/2),"");
 }
 
 void print_graph_options(){
@@ -91,7 +91,7 @@ rep:
 			strncpy(buffer,(const char*)&char4,1024);
 			return buffer;
 		case '5':
-			break;
+			return "";
 		default:
 			printf(" \nCould you reinsert your choice please?\n");
 			fflush(stdout);
@@ -153,7 +153,7 @@ rep:
 			strncpy(buffer,(const char*)&char6,1024);
 			return buffer;
 		case '7':
-			break;
+			return "";
 		default:
 			printf(" \nCould you reinsert your choice please?\n");
 			fflush(stdout);
@@ -193,7 +193,7 @@ rep:
 			strncpy(buffer,(const char*)&char2,1024);
 			return buffer;
 		case '3':
-			break;
+			return "";
 		default:
 			printf(" \nCould you reinsert your choice please?\n");
 			fflush(stdout);
@@ -255,7 +255,7 @@ rep:
 			strncpy(buffer,(const char*)&char6,1024);
 			return buffer;
 		case '7':
-			break;
+			return "";
 		default:
 			printf(" \nCould you reinsert your choice please?\n");
 			fflush(stdout);
@@ -287,33 +287,41 @@ void call_func(int value){
 	switch(value) {
 		case 1:
 			flag = flag_setup_fo_base();
-			snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o fo Base/main_fo.c -lm -D%s", flag);
-			system(gcc_buffer);
-			memset(gcc_buffer, 0, 1024);
-			snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o fo_simulator Base/fo_simulator.c -lm -D%s", flag);
-			system(gcc_buffer);
-			snprintf(buffer, sizeof(buffer), "./fo_simulator %Lf", seed);
+			if (strncmp(flag,"",1) != 0){
+				snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o fo Base/main_fo.c -lm -D%s", flag);
+				system(gcc_buffer);
+				memset(gcc_buffer, 0, 1024);
+				snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o fo_simulator Base/fo_simulator.c -lm -D%s", flag);
+				system(gcc_buffer);
+				snprintf(buffer, sizeof(buffer), "./fo_simulator %Lf", seed);
+			}
 			break;
 		case 2:
 			flag = flag_setup_io_base();
-			snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o main_batched Base/main_batched.c -lm -D%s", flag);
-			system(gcc_buffer);
-			snprintf(buffer, sizeof(buffer), "./main_batched %Lf", seed);
+			if (strncmp(flag,"",1) != 0){
+				snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o main_batched Base/main_batched.c -lm -D%s", flag);
+				system(gcc_buffer);
+				snprintf(buffer, sizeof(buffer), "./main_batched %Lf", seed);
+			}
 			break;
 		case 3:
 			flag = flag_setup_fo_better();
-			snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o fo_better Migliorativo/fo_better.c -lm -D%s", flag);
-			system(gcc_buffer);
-			memset(gcc_buffer, 0, 1024);
-			snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o better_fo_simulator Migliorativo/better_fo_simulator.c -lm -D%s", flag);
-			system(gcc_buffer);
-			snprintf(buffer, sizeof(buffer), "./better_fo_simulator %Lf", seed);
+			if (strncmp(flag,"",1) != 0){
+				snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o fo_better Migliorativo/fo_better.c -lm -D%s", flag);
+				system(gcc_buffer);
+				memset(gcc_buffer, 0, 1024);
+				snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o better_fo_simulator Migliorativo/better_fo_simulator.c -lm -D%s", flag);
+				system(gcc_buffer);
+				snprintf(buffer, sizeof(buffer), "./better_fo_simulator %Lf", seed);
+			}
 			break;
 		case 4:
 			flag = flag_setup_io_better();
-			snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o better_call_batched Migliorativo/better_call_batched.c -lm -D%s", flag);
-			system(gcc_buffer);
-			snprintf(buffer, sizeof(buffer), "./better_call_batched %Lf", seed);
+			if (strncmp(flag,"",1) != 0){
+				snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o better_call_batched Migliorativo/better_call_batched.c -lm -D%s", flag);
+				system(gcc_buffer);
+				snprintf(buffer, sizeof(buffer), "./better_call_batched %Lf", seed);
+			}
 			break;
 		case 5:
 			snprintf(gcc_buffer, sizeof(gcc_buffer), "gcc -o main Base/main.c -lm");
@@ -331,7 +339,7 @@ void call_func(int value){
 
 	memset(buffer, 0, 1024);
 label:
-	if (value == 1 || value == 3){
+	if (value == 1 && strncmp(flag,"",1) != 0 || value == 3 && strncmp(flag,"",1) != 0){
 		// serve menu multichoce da 4 che, finita la run, mi chiede quale dei 3 grafici voglio
 		// se chiudo il grafo, mi chiede se voglio vedere un altro grafo o tornare indietro
 		//resp time pol control utilization exit
@@ -364,7 +372,7 @@ label:
 			default:
 				break;
 		}
-	}else if(value == 2 || value == 4){
+	}else if(value == 2 && strncmp(flag,"",1) != 0 || value == 4 && strncmp(flag,"",1) != 0){
 
 		print_graph_options();
 		op = multiChoice("Select an option", options, 4, 0);
